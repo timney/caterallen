@@ -3,16 +3,17 @@ const puppeteer = require('puppeteer');
 
 const pass = process.env.PAC;
 const word = process.env.PASSWORD;
+const customerNo = process.env.CUSTOMER_NO;
 
 const login = async(page) => {
     await page.focus('#iCustId');
-    await page.type(process.env.CUSTOMER_NO);
+    await page.type(customerNo);
 
     const chars = await page.evaluate(() => {
         const sel = Array.from(document.querySelectorAll('.tran_confirm'));
         return sel.map(s => s.innerText);
     });
-    console.log(chars)
+    
     await page.focus('#ipos1');
     await page.type(pass[chars[0]-1]);
 
